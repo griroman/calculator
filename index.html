@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>Калькулятор</title>
+	<meta charset="utf-8">
+	<style>
+		#calc {
+			width: 250px;
+			padding: 2px;
+			padding-bottom: 4px;
+			border: 2px solid #4d2d2d;
+			font-size: 0;
+			margin: 0 auto;
+			position: relative;
+		}
+		#display {
+			display: block;
+			width: 235px;
+			height: 30px;
+			border: 1px solid #570e0e;
+			margin: 0 auto;
+			margin: 4px;
+			text-align: right;
+			outline: 0;
+			background: #fff;
+			padding-right: 5px;
+		}
+		.button, button_C {
+			width: 40px;
+			height: 30px;
+			line-height: 30px;
+			display: inline-block;
+			cursor: pointer;
+			border: 1px solid #7e4646;
+			margin: 4px;
+			font-size: 16px;
+			text-align: center;
+			transition: background .1s,
+			color .1s;
+		}
+		.button:hover {
+			background: rgb(84, 190, 204);
+			color: #fff;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="calc">
+		<input type="text" id="display" disabled>
+		<div class="button" data-type="7">7</div>
+		<div class="button" data-type="8">8</div>
+		<div class="button" data-type="9">9</div>
+		<div class="button" data-type="+">+</div>
+		<div class="button" data-type="sqrt">&radic;</div>
+		<div class="button" data-type="4">4</div>
+		<div class="button" data-type="5">5</div>
+		<div class="button" data-type="6">6</div>
+		<div class="button" data-type="-">-</div>
+		<div class="button" data-type="pow">x&sup2;</div>
+		<div class="button" data-type="1">1</div>
+		<div class="button" data-type="2">2</div>
+		<div class="button" data-type="3">3</div>
+		<div class="button" data-type="*">&times;</div>
+		<div class="button" data-type="minusOne">1/x</div>
+		<div class="button" data-type="0">0</div>
+		<div class="button" data-type=".">.</div>
+		<div class="button" data-type="=">=</div>
+		<div class="button button_C" title="Очистить" data-type="C">C</div>
+		<div class="button" data-type="/">&divide;</div>
+	</div> 
+	<script>
+		var calc = document.getElementById('calc');
+		var buttons = calc.getElementsByClassName('button');
+		var display = document.getElementById('display');
+		var str = '';
+		for (var i = 0; i < buttons.length; i++) {
+			addEvent(buttons[i]);               
+		}
+		function addEvent(button) {
+			button.addEventListener('click', event);
+			function event() {
+				var type = button.getAttribute('data-type');  
+				if (type === '=') {
+					str = eval(str);
+					display.value = str;
+					return;
+				} else if (type === 'C') {
+					str = '';
+				} else if (type === "sqrt") {
+                    str = sqrt(display.value);
+                } else if (type === 'pow') {
+                    str = pow(display.value);
+                } else if (type === 'minusOne') {
+                    str = minusOne(display.value);
+                } else {
+					str += type;
+				}
+				display.value = str;
+			}
+		}
+        function sqrt(value) {
+            var result = Math.sqrt(value);
+            return result;
+        }
+        function pow(value) {
+            var result = Math.pow(value, 2);
+            return result;
+        }
+        function minusOne(value) {
+            var result = 1/value;
+            return result;
+        }
+        // надо подумать как обнулять показания на дисплее перед новым вводом чисел!
+	</script>
+</body>
+</html>
